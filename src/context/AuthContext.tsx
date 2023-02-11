@@ -20,7 +20,7 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
   }, []);
 
   if (loading) {
-    return;
+    return <></>;
   }
 
   return (
