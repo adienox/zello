@@ -120,6 +120,7 @@ const Input = ({ messageCount }: { messageCount: number }) => {
         type="text"
         placeholder="Type Something..."
         onChange={(e) => setText(e.target.value)}
+        autoComplete="off"
       />
       <div className="flex items-center gap-2 text-gray-400">
         <UilMicrophone />
