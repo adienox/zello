@@ -53,9 +53,9 @@ const Chats = () => {
       {chatItems.length !== 0 ? (
         chatItems
       ) : (
-        <div className="mx-auto mt-10 flex w-[40%] flex-col items-center rounded bg-blueHighlight p-10 text-white drop-shadow-2xl">
+        <div className="mx-auto mt-10 flex flex-col items-center rounded bg-blueHighlight p-10 text-white drop-shadow-2xl md:w-[40%]">
           <h3 className="text-3xl">Get started!</h3>
-          <p className="text-sm">
+          <p className="text-sm text-center">
             Search users from the search bar and get to know each other!
           </p>
           <Image src={Reading} className="w-[80%]" alt="" />
