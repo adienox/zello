@@ -66,6 +66,7 @@ const Profile = () => {
   };
 
   const removeImage = async () => {
+    setLoading(true);
     await Promise.all([
       updateProfile(currentUser, {
         photoURL:
@@ -110,7 +111,7 @@ const Profile = () => {
                 Change Picture
               </button>
               <button
-                className="rounded border border-gray-600 bg-primary p-2 px-4 drop-shadow-sm"
+                className="rounded border border-gray-600 bg-primary p-2 px-4 drop-shadow-sm disabled:cursor-not-allowed"
                 onClick={removeImage}
                 disabled={loading}
               >
