@@ -42,20 +42,6 @@ const MenuElements = () => {
             <span>Chats</span>
           </button>
         )}
-        {active === "/settings" ? (
-          <button className={buttonActive}>
-            <UilApps className="-mt-[4px]" />
-            <span className="-mt-[4px]">Settings</span>
-          </button>
-        ) : (
-          <button
-            className={buttonInactive}
-            onClick={() => handleClick("/settings")}
-          >
-            <UilApps />
-            <span>Settings</span>
-          </button>
-        )}
       </div>
       {/* Menu Items for mobile */}
       <div className="flex w-[100%] items-center justify-around md:hidden">
@@ -75,15 +61,6 @@ const MenuElements = () => {
         ) : (
           <button className="p-3" onClick={() => handleClick("/")}>
             <UilChat />
-          </button>
-        )}
-        {active === "/settings" ? (
-          <button className={buttonActiveMobile}>
-            <UilApps />
-          </button>
-        ) : (
-          <button className="p-3" onClick={() => handleClick("/settings")}>
-            <UilApps />
           </button>
         )}
       </div>
