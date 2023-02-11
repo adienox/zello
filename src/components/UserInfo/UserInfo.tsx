@@ -16,13 +16,22 @@ const UserInfo = () => {
   const user = useContext(AuthContext) as User;
   const { chat, dispatch } = useContext(ChatContext) as ChatContext;
 
+  // Function to delete a chat
   const deleteChat = async () => {
+    // Object with the chatId field set to a call to the deleteField function
     const chatDeletion = {
       [chat.chatId]: deleteField(),
     };
-    await updateDoc(doc(db, "userChats", chat.uid), chatDeletion);
-    await updateDoc(doc(db, "userChats", user.uid), chatDeletion);
-    await deleteDoc(doc(db, "chats", chat.chatId));
+
+    // the function updates two userChats documents and deletes a chats document in parallel using Promise.all. This is done to minimize latency and improve performance.
+    await Promise.all([
+      // Update the userChats document for both the current user and the selected user
+      updateDoc(doc(db, "userChats", chat.uid), chatDeletion),
+      updateDoc(doc(db, "userChats", user.uid), chatDeletion),
+
+      // Delete the chats document
+      deleteDoc(doc(db, "chats", chat.chatId)),
+    ]);
   };
 
   return (

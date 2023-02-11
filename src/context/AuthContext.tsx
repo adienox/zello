@@ -16,12 +16,14 @@ const AuthContextProvider = ({ children }: { children: JSX.Element }) => {
     return () => {
       cleanup();
     };
-  }, []);
+  }, []); // Adding an empty dependency array to ensure that the effect only runs once on mount
 
+  // If the data is still loading, return an empty fragment
   if (loading) {
     return <></>;
   }
 
+  // Provide the current user to the context
   return (
     <AuthContext.Provider value={currentUser}>{children}</AuthContext.Provider>
   );

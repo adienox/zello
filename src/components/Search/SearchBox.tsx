@@ -11,22 +11,25 @@ import { useState } from "react";
 import SearchItem from "./SearchItem";
 
 const SearchBox = () => {
+  // Setting the initial state for the searchText and chat variables using the useState hook
   const [searchText, setSearchText] = useState("");
   const [chat, setChat] = useState<DocumentData | null>(null);
 
+  // The searchUser function that is called on form submission
   const searchUser = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    // Building the query using the collection and where methods
     const q = query(
       collection(db, "users"),
       where("displayName", "==", searchText)
     );
 
+    // Getting the querySnapshot by calling the getDocs function
     const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach((doc) => {
-      setChat(doc.data());
-    });
+    // Updating the chat state by setting it to the data of the first document in the querySnapshot
+    setChat(querySnapshot.docs[0]?.data());
   };
 
   return (

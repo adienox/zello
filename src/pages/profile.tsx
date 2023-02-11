@@ -17,9 +17,12 @@ const Profile = () => {
   const [imageURL, setImageURL] = useState(currentUser.photoURL);
 
   const handleUpdate = async (event: FormEvent) => {
+    // Prevent the default form submit behavior
     event.preventDefault();
+    // Set loading state to true
     setLoading(true);
 
+    // Update the user's display name and email in Firebase auth and Firestore
     await Promise.all([
       updateProfile(currentUser, {
         displayName: name,
@@ -29,42 +32,72 @@ const Profile = () => {
         displayName: name,
         email,
       }),
-    ]).then(() => Router.reload());
+    ])
+      .then(() => {
+        // Reload the page after updates are successful
+        Router.reload();
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
   };
 
   const updateImage = () => {
+    // Return if no image is selected
     if (!image) return;
+    // Set loading state to true
     setLoading(true);
 
+    // Reference to the user profile image in Firebase Storage
     const imageRef = ref(storage, "userProfile/" + currentUser.displayName);
+    // Upload the image
     const uploadTask = uploadBytesResumable(imageRef, image);
 
     uploadTask.on(
       "state_changed",
       null,
       (error) => {
-        console.log(error);
+        console.error(error);
+        setLoading(false);
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-          await Promise.all([
-            updateProfile(currentUser, {
-              photoURL: downloadURL,
-            }),
-            updateDoc(doc(db, "users", currentUser.uid), {
-              photoURL: downloadURL,
-            }),
-          ]).then(() => Router.reload());
-        });
+        // Get the download URL of the image
+        getDownloadURL(uploadTask.snapshot.ref)
+          .then(async (downloadURL) => {
+            // Update the user's photo URL in Firebase auth and Firestore
+            await Promise.all([
+              updateProfile(currentUser, {
+                photoURL: downloadURL,
+              }),
+              updateDoc(doc(db, "users", currentUser.uid), {
+                photoURL: downloadURL,
+              }),
+            ])
+              .then(() => {
+                // Reload the page after updates are successful
+                Router.reload();
+              })
+              .catch((error) => {
+                console.error(error);
+                setLoading(false);
+              });
+          })
+          .catch((error) => {
+            console.error(error);
+            setLoading(false);
+          });
       }
     );
   };
 
+  // The function changeImage sets the imageURL and image state with the provided image.
   const changeImage = (image: Blob) => {
     setImageURL(URL.createObjectURL(image));
     setImage(image);
   };
 
+  // The function removeImage sets the loading state to true and performs an update of the profile and the corresponding document in the database with the default image URL. To minimize latency, both updates are performed in parallel with Promise.all.
   const removeImage = async () => {
     setLoading(true);
     await Promise.all([

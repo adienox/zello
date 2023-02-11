@@ -1,16 +1,26 @@
-import { UilUser, UilChat, UilApps } from "@iconscout/react-unicons";
+import { UilUser, UilChat } from "@iconscout/react-unicons";
 import { useRouter } from "next/router";
 
 const MenuElements = () => {
   const router = useRouter();
+
+  // Get the current active pathname
   const active = router.pathname;
+
+  // Function to handle navigating to different pages
   const handleClick = (page: string) => {
     router.push(page);
   };
+
+  // CSS class for the active button
   const buttonActive =
     "flex h-[90px] cursor-pointer items-center gap-3 border-t-4 border-greenHighlight text-xl text-greenHighlight";
+
+  // CSS class for the inactive button
   const buttonInactive =
-    "flex h-[90px] cursor-pointer items-center gap-3  text-xl text-gray-500";
+    "flex h-[90px] cursor-pointer items-center gap-3 text-xl text-gray-500";
+
+  // CSS class for the active mobile button
   const buttonActiveMobile = "p-3 bg-greenHighlight text-gray-800 rounded-xl";
 
   return (

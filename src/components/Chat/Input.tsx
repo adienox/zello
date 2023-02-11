@@ -24,9 +24,13 @@ const Input = ({ messageCount }: { messageCount: number }) => {
   const [text, setText] = useState("");
   const [image, setImage] = useState<File | null>(null);
 
+  // Handles the form submission, sending a message or an image
   const handleSubmit = async (event: React.FormEvent) => {
+    // Prevents the default form submission behavior
     event.preventDefault();
 
+    // If the message count is 0, update the "userChats" document
+    // with the combined UID of the current user and the recipient
     if (!messageCount) {
       const combinedUid =
         currentUser.uid > chat.uid
@@ -44,16 +48,23 @@ const Input = ({ messageCount }: { messageCount: number }) => {
       });
     }
 
+    // If an image was selected, upload the image to the storage
     if (image) {
       const storageRef = ref(storage, "images/" + nanoid());
       const uploadTask = uploadBytesResumable(storageRef, image);
 
       uploadTask.on(
         "state_changed",
+        // Handle progress updates
         null,
+        // Handle errors
         (error) => console.log(error),
+        // Handle completion
         async () => {
+          // Get the download URL for the uploaded image
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+
+          // Update the "chats" document with the message
           await updateDoc(doc(db, "chats", chat.chatId), {
             messages: arrayUnion({
               id: nanoid(),
@@ -65,6 +76,7 @@ const Input = ({ messageCount }: { messageCount: number }) => {
         }
       );
 
+      // Update the "userChats" document with the last message information
       const lastMessage = {
         [chat.chatId + ".lastMessage"]: {
           senderId: currentUser.uid,
@@ -78,9 +90,11 @@ const Input = ({ messageCount }: { messageCount: number }) => {
         updateDoc(doc(db, "userChats", chat.uid), lastMessage),
       ]);
 
+      // Reset the selected image
       setImage(null);
     }
 
+    // If a text message was entered, send the message
     if (text) {
       const message = {
         messages: arrayUnion({
@@ -91,6 +105,7 @@ const Input = ({ messageCount }: { messageCount: number }) => {
         }),
       };
 
+      // Set the lastMessage object to contain the information of the last message sent in the chat
       const lastMessage = {
         [chat.chatId + ".lastMessage"]: {
           senderId: currentUser.uid,
@@ -99,8 +114,10 @@ const Input = ({ messageCount }: { messageCount: number }) => {
         [chat.chatId + ".date"]: serverTimestamp(),
       };
 
+      // Reset the text in the state after sending the message
       setText("");
 
+      // Update the information in the chats document, userChats document for the current user, and userChats document for the recipient of the message
       await Promise.all([
         updateDoc(doc(db, "chats", chat.chatId), message),
         updateDoc(doc(db, "userChats", currentUser.uid), lastMessage),

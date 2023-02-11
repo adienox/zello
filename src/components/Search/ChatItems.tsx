@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { DateTime } from "luxon";
 import { User } from "firebase/auth";
 import { ChatContext } from "@/context/ChatContext";
@@ -11,22 +11,31 @@ const ChatItems = ({
   details?: any;
   active?: boolean;
 }) => {
+  // Importing the dispatch method from the ChatContext and the currentUser from the AuthContext using the useContext hook
   const { dispatch } = useContext(ChatContext) as ChatContext;
   const currentUser = useContext(AuthContext) as User;
 
-  const chatDetails = details[1].userInfo;
-  const date = details[1].date
-    ? DateTime.fromJSDate(details[1].date.toDate()).toLocaleString(
-        DateTime.TIME_24_SIMPLE
-      )
-    : "";
-  const lastMessage = details[1].lastMessage;
-  const backgroundColor = active ? "bg-secondary" : "";
+  // Destructuring the properties from the details[1] object
+  const { userInfo: chatDetails, date, lastMessage } = details[1];
+
+  // Setting the activeBackgroundColor based on the active boolean value
+  const activeBackgroundColor = active ? "bg-secondary" : "";
+
+  // Using the useMemo hook to format the date string
+  const dateString = useMemo(
+    () =>
+      date
+        ? DateTime.fromJSDate(date.toDate()).toLocaleString(
+            DateTime.TIME_24_SIMPLE
+          )
+        : "",
+    [date]
+  );
 
   return (
     details && (
       <div
-        className={`mt-1 flex cursor-pointer items-center gap-5 rounded-2xl p-5 py-3 transition-all ease-in-out hover:bg-secondary ${backgroundColor}`}
+        className={`mt-1 flex cursor-pointer items-center gap-5 rounded-2xl p-5 py-3 transition-all ease-in-out hover:bg-secondary ${activeBackgroundColor}`}
         onClick={() => dispatch({ type: "CHANGE_CHAT", payload: chatDetails })}
       >
         <img
@@ -38,7 +47,7 @@ const ChatItems = ({
             <h3 className="text-lg font-bold text-white">
               {chatDetails.displayName}
             </h3>
-            <span className="text-gray-500">{date}</span>
+            <span className="text-gray-500">{dateString}</span>
           </div>
           <span className="text-gray-500">
             {chatDetails.email.length > 20

@@ -1,7 +1,7 @@
 import { ChatContext } from "@/context/ChatContext";
 import { Timestamp } from "firebase/firestore";
 import { DateTime } from "luxon";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useMemo, useRef } from "react";
 
 export interface MessageObject {
   date: Timestamp;
@@ -14,14 +14,22 @@ export interface MessageObject {
 const Message = ({ data, owner }: { data: MessageObject; owner?: boolean }) => {
   const { chat } = useContext(ChatContext) as ChatContext;
 
-  const date = DateTime.fromJSDate(data.date.toDate()).toLocaleString(
-    DateTime.TIME_24_SIMPLE
-  );
+  // Define a dummy reference to an HTML element.
   const dummy = useRef<HTMLDivElement>(null);
 
+  // Run the useEffect hook to smoothly scroll the dummy element into view if it exists.
   useEffect(() => {
-    dummy.current && dummy.current.scrollIntoView({ behavior: "smooth" });
+    dummy.current?.scrollIntoView({ behavior: "smooth" });
   }, [data]);
+
+  // Use useMemo hook to memoize the calculation of the formatted date string.
+  const date = useMemo(
+    () =>
+      DateTime.fromJSDate(data.date.toDate()).toLocaleString(
+        DateTime.TIME_24_SIMPLE
+      ),
+    [data]
+  );
 
   return (
     <>
