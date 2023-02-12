@@ -32,7 +32,7 @@ const Index = () => {
           )}
         </div>
         {/* Content for small screen desktop */}
-        <div className="bg-primary hidden md:block">
+        <div className="hidden bg-primary md:block lg:hidden">
           {chat.chatId === "" && <Search />}
           {chat.chatId && !chat.userInfoShown && <Chat />}
           {chat.userInfoShown && <UserInfo />}
