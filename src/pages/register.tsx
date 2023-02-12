@@ -1,13 +1,15 @@
 import { signInAnonymously, updateEmail, updateProfile } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 import Router from "next/router";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import { auth, db } from "@/firebase/clientApp";
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
   // anonRegister function to allow users to sign up anonymously
   const anonRegister = async () => {
+    setLoading(true);
     try {
       // Sign in anonymously
       const userDetail = await signInAnonymously(auth);
@@ -49,6 +51,7 @@ const Register = () => {
       // Redirect user
       Router.push("/");
     } catch (error) {
+      setLoading(false);
       console.log(error); // Log error if any
     }
   };
@@ -71,10 +74,11 @@ const Register = () => {
           <span>Already have an account? Proceed to Login</span>
           <span>Welcome Aboard!</span>
         </div>
-        <div className="mt-12 flex flex-col items-center">
+        <div className="mt-12 flex flex-col items-center lg:block">
           <button
             onClick={anonRegister}
-            className="h-[50px] w-[90%] rounded-lg bg-black text-white lg:w-[500px]"
+            className="h-[50px] w-[90%] rounded-lg bg-black text-white disabled:cursor-not-allowed disabled:bg-black/30 lg:w-[500px]"
+            disabled={loading}
           >
             Anonymous Login
           </button>
