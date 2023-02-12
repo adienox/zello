@@ -13,10 +13,25 @@ const Layout = ({ children }: { children: JSX.Element }) => {
   // Destructure the `chat` value from the `ChatContext`
   const { chat } = useContext(ChatContext) as ChatContext;
 
-  // Use effect hook to set the `navShown` state based on the window width
+  // This sets the initial state of the `width` variable to the inner width of the window
+  const [width, setWidth] = useState(window.innerWidth);
+
+  // This useEffect hook sets the `navShown` state based on the window width
+  // when the component using this hook is first rendered and whenever the `width` state updates
   useEffect(() => {
-    setNavShown(window.innerWidth < 760 ? false : true);
-  }, []); // Adding an empty dependency array to ensure that the effect only runs once on mount
+    // This function sets the width of the window to `setWidth`
+    const handleResize = () => setWidth(window.innerWidth);
+
+    // Adds an event listener to the window object for when the "resize" event occurs
+    window.addEventListener("resize", handleResize);
+
+    // This sets the value of `setNavShown` based on the current width of the window
+    setNavShown(width < 768 ? false : true);
+
+    // This function returns a cleanup function that will remove the event listener
+    // when the component using this hook unmounts or when the `useEffect` is re-run
+    return () => window.removeEventListener("resize", handleResize);
+  }, [width]);
 
   // If the `pathname` matches "register" or "login", return the children directly
   if (pathname.match("register|login")) {
