@@ -10,7 +10,7 @@ const TopBar = () => {
         <>
           <div className="flex items-center gap-5">
             <button onClick={() => dispatch({ type: "RESET" })}>
-              <UilAngleLeft className="text-white md:hidden" />
+              <UilAngleLeft className="text-white lg:hidden" />
             </button>
             <img
               className="h-[32px] w-[32px] rounded-full object-cover"

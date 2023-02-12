@@ -1,9 +1,8 @@
 import UserInfo from "./UserInfo";
 
 const index = () => {
-
   return (
-    <div className="bg-[#20232B] md:p-5">
+    <div className="bg-[#20232B] h-[calc(90vh-92px)]">
       <UserInfo />
     </div>
   );

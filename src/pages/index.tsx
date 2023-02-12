@@ -21,7 +21,7 @@ const Index = () => {
       <>
         {/* Content for desktop */}
         <div
-          className={`hidden border-black md:grid md:border-t-2 ${gridColumns}`}
+          className={`hidden border-black md:border-t-2 lg:grid ${gridColumns}`}
         >
           <Search />
           {chat.chatId && (
@@ -31,6 +31,13 @@ const Index = () => {
             </>
           )}
         </div>
+        {/* Content for small screen desktop */}
+        <div className="bg-primary hidden md:block">
+          {chat.chatId === "" && <Search />}
+          {chat.chatId && !chat.userInfoShown && <Chat />}
+          {chat.userInfoShown && <UserInfo />}
+        </div>
+
         {/* Content for Mobile */}
         <div className="h-[100vh] w-[100vw] bg-primary md:hidden">
           {chat.chatId === "" && <Search />}

@@ -43,7 +43,7 @@ const index = () => {
           </div>
         </div>
         {/* Mobile Navbar */}
-        <div className="fixed bottom-0 left-0 right-0 flex h-[90px] items-center rounded-3xl rounded-b-none bg-primaryDark/75 text-gray-300 backdrop-blur-sm md:hidden">
+        <div className="fixed z-10 bottom-0 left-0 right-0 flex h-[90px] items-center rounded-3xl rounded-b-none bg-primaryDark/75 text-gray-300 backdrop-blur-sm md:hidden">
           <MenuElements />
         </div>
       </>

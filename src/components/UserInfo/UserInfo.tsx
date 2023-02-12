@@ -35,14 +35,14 @@ const UserInfo = () => {
   };
 
   return (
-    <div className="rounded-b-3xl bg-[#5852D6] p-5 md:rounded-2xl">
+    <div className="md:mt-0 rounded-b-3xl bg-[#5852D6] p-5 md:m-5 md:rounded-2xl">
       <UilAngleLeft
-        className="text-white md:hidden"
+        className="cursor-pointer text-white lg:hidden"
         onClick={() => dispatch({ type: "TOGGLE_USER_INFO" })}
       />
-      <div className="mt-5 flex flex-col items-center gap-5 md:mt-0 md:flex-row">
+      <div className="mt-5 flex flex-col items-center gap-5 lg:mt-0 lg:flex-row">
         <img
-          className="h-[100px] w-[100px] rounded-full object-cover md:h-[50px] md:w-[50px]"
+          className="h-[100px] w-[100px] rounded-full bg-white object-cover lg:h-[50px] lg:w-[50px]"
           src={chat.photoURL}
         />
         <div className="flex flex-col">
