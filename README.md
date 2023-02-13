@@ -52,16 +52,6 @@ npm run dev
 
 4. Open your browser and go to `http://localhost:3000`
 
-## Deployment
-
-The application is currently hosted on Vercel. To deploy to Vercel, make sure you have the Vercel CLI installed.
-
-```
-npm i -g vercel
-```
-
-1. Login to Vercel
-
 ## Built With
 
 - [Next.js](https://nextjs.org/) - A React Framework for Server-Rendered or Static Applications
