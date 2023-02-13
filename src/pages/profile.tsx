@@ -195,7 +195,7 @@ const Profile = () => {
               among the community.
             </p>
           </div>
-          <Image className="h-[200px]" src={Chilling} alt="" />
+          <Image className="h-[200px]" src={Chilling} alt="" priority />
         </div>
         <div className="h-[90px]"></div>
       </div>
