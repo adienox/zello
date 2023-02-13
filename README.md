@@ -1,38 +1,73 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Zello
+
+A real time chat application built using Firebase and Next.js.
+
+## Features
+
+- Anonymous Sign up
+- Profile Generation
+- Easy Profile Editing (username and profile image)
+- Real Time Chatting using Firestore's onSnapshot method
+- Uses Firestore's getDoc, updateDoc and other methods for data manipulation
+- Tailwind for Styling
+- Mobile Responsive
+- Hosted on Vercel
+- Typescript
 
 ## Getting Started
 
-First, run the development server:
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+### Prerequisites
+
+- Node.js
+- Firebase account (with Firestore enabled)
+
+### Installing
+
+1. Clone the repository
+
+```
+git clone https://github.com/zello.git
+cd zello
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Create a `.env.local` file in the root directory and add your Firebase credentials as follows:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```
+FIREBASE_API_KEY=
+FIREBASE_AUTH_DOMAIN=
+FIREBASE_DATABASE_URL=
+FIREBASE_PROJECT_ID=
+FIREBASE_STORAGE_BUCKET=
+FIREBASE_MESSAGING_SENDER_ID=
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+3. Start the development server
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+4. Open your browser and go to `http://localhost:3000`
 
-## Learn More
+## Deployment
 
-To learn more about Next.js, take a look at the following resources:
+The application is currently hosted on Vercel. To deploy to Vercel, make sure you have the Vercel CLI installed.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+npm i -g vercel
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. Login to Vercel
 
-## Deploy on Vercel
+## Built With
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [Next.js](https://nextjs.org/) - A React Framework for Server-Rendered or Static Applications
+- [Firebase](https://firebase.google.com/) - A Backend-as-a-Service platform
+- [Tailwind](https://tailwindcss.com/) - A Utility-First CSS Framework for Rapid UI Development
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Author
+
+- [Adienox](https://github.com/adienox)
